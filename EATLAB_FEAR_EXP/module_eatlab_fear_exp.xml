@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_eatlab_fear_exp" default="compile.module.eatlab_fear_exp">
+  <dirname property="module.eatlab_fear_exp.basedir" file="${ant.file.module_eatlab_fear_exp}"/>
+  
+  <property name="module.jdk.home.eatlab_fear_exp" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.eatlab_fear_exp" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.eatlab_fear_exp" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.eatlab_fear_exp" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="eatlab_fear_exp.output.dir" value="${module.eatlab_fear_exp.basedir}/out/production/EATLAB_FEAR_EXP"/>
+  <property name="eatlab_fear_exp.testoutput.dir" value="${module.eatlab_fear_exp.basedir}/out/test/EATLAB_FEAR_EXP"/>
+  
+  <path id="eatlab_fear_exp.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="eatlab_fear_exp.module.production.classpath">
+    <path refid="${module.jdk.classpath.eatlab_fear_exp}"/>
+  </path>
+  
+  <path id="eatlab_fear_exp.runtime.production.module.classpath">
+    <pathelement location="${eatlab_fear_exp.output.dir}"/>
+  </path>
+  
+  <path id="eatlab_fear_exp.module.classpath">
+    <path refid="${module.jdk.classpath.eatlab_fear_exp}"/>
+    <pathelement location="${eatlab_fear_exp.output.dir}"/>
+  </path>
+  
+  <path id="eatlab_fear_exp.runtime.module.classpath">
+    <pathelement location="${eatlab_fear_exp.testoutput.dir}"/>
+    <pathelement location="${eatlab_fear_exp.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.eatlab_fear_exp">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.eatlab_fear_exp">
+    <patternset refid="excluded.from.module.eatlab_fear_exp"/>
+  </patternset>
+  
+  <path id="eatlab_fear_exp.module.sourcepath">
+    <dirset dir="${module.eatlab_fear_exp.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.eatlab_fear_exp" depends="compile.module.eatlab_fear_exp.production,compile.module.eatlab_fear_exp.tests" description="Compile module EATLAB_FEAR_EXP"/>
+  
+  <target name="compile.module.eatlab_fear_exp.production" depends="register.custom.compilers" description="Compile module EATLAB_FEAR_EXP; production classes">
+    <mkdir dir="${eatlab_fear_exp.output.dir}"/>
+    <javac2 destdir="${eatlab_fear_exp.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.eatlab_fear_exp}/javac">
+      <compilerarg line="${compiler.args.eatlab_fear_exp}"/>
+      <bootclasspath refid="eatlab_fear_exp.module.bootclasspath"/>
+      <classpath refid="eatlab_fear_exp.module.production.classpath"/>
+      <src refid="eatlab_fear_exp.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.eatlab_fear_exp"/>
+    </javac2>
+    
+    <copy todir="${eatlab_fear_exp.output.dir}">
+      <fileset dir="${module.eatlab_fear_exp.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.eatlab_fear_exp.tests" depends="register.custom.compilers,compile.module.eatlab_fear_exp.production" description="compile module EATLAB_FEAR_EXP; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.eatlab_fear_exp" description="cleanup module">
+    <delete dir="${eatlab_fear_exp.output.dir}"/>
+    <delete dir="${eatlab_fear_exp.testoutput.dir}"/>
+  </target>
+</project>
